@@ -8,6 +8,7 @@ target/
 # Environment / secrets
 .env
 .env.*
+!.env.example
 
 # Logs
 *.log
@@ -19,6 +20,3 @@ Thumbs.db
 # Frontend - relevant senare
 node_modules/
 frontend/dist/
-
-# Local Spring configuration
-backend/src/main/resources/application.properties
