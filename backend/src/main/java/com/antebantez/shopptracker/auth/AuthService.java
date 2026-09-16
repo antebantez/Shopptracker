@@ -1,6 +1,7 @@
 package com.antebantez.shopptracker.auth;
 
 import com.antebantez.shopptracker.common.exception.EmailAlreadyExistsException;
+import com.antebantez.shopptracker.common.exception.InvalidCredentialsException;
 import com.antebantez.shopptracker.user.User;
 import com.antebantez.shopptracker.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +23,7 @@ public class AuthService {
     public User register(RegisterRequest registerRequest) {
         String email = registerRequest.email().trim().toLowerCase(Locale.ROOT);
 
-        if(userRepository.existsByEmail(email)){
+        if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException("Email already exists");
         }
         String passwordHash = passwordEncoder.encode(registerRequest.password());
@@ -32,5 +33,20 @@ public class AuthService {
         return userRepository.save(user);
     }
 
+    public User login(LoginRequest loginRequest) {
+        String email = loginRequest.email()
+                .trim()
+                .toLowerCase(Locale.ROOT);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new InvalidCredentialsException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(loginRequest.password(), user.getPasswordHash())) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        return user;
+    }
 
 }
