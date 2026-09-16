@@ -47,3 +47,15 @@ jobs:
       - name: Run Maven verify
         working-directory: backend
         run: ./mvnw --batch-mode verify
+
+      - name: Run Maven verify
+        working-directory: backend
+        run: ./mvnw --batch-mode verify
+
+      - name: Publish test results
+        if: always()
+        uses: dorny/test-reporter@v2
+        with:
+          name: Backend tests
+          path: backend/target/surefire-reports/*.xml
+          reporter: java-junit
