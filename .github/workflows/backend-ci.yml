@@ -48,10 +48,6 @@ jobs:
         working-directory: backend
         run: ./mvnw --batch-mode verify
 
-      - name: Run Maven verify
-        working-directory: backend
-        run: ./mvnw --batch-mode verify
-
       - name: Publish test results
         if: always()
         uses: dorny/test-reporter@v2
