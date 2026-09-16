@@ -53,4 +53,13 @@ public class AuthController {
         return new AuthResponse(user.getId(), user.getEmail());
 
     }
+
+    @GetMapping("/me")
+    public AuthResponse getMe(Authentication authentication) {
+        String email = authentication.getName();
+
+        User user = authService.getUserByEmail(email);
+
+        return new AuthResponse(user.getId(), user.getEmail());
+    }
 }
