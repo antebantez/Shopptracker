@@ -1,4 +1,6 @@
 package com.antebantez.shopptracker.shoppinglist;
 
-public interface ShoppingListRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ShoppingListRepository extends JpaRepository<ShoppingList, Long> {
 }
