@@ -54,6 +54,18 @@ public class AuthController {
 
     }
 
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(HttpServletRequest httpServletRequest) {
+        var session = httpServletRequest.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        SecurityContextHolder.clearContext();
+    }
+
     @GetMapping("/me")
     public AuthResponse getMe(Authentication authentication) {
         String email = authentication.getName();
