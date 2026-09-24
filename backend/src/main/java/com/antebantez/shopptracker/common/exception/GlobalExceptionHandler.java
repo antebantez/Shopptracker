@@ -46,4 +46,13 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(errors);
     }
+
+    @ExceptionHandler(AuthenticatedUserNotFoundException.class)
+    public ResponseEntity<String> handleAuthenticatedUserNotFound(
+            AuthenticatedUserNotFoundException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(exception.getMessage());
+    }
 }
